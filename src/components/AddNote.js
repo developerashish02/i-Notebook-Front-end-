@@ -18,7 +18,7 @@ function AddNote() {
         addNote(note.title ,note.description);
     };
     return (
-        <div className="container my-3">
+        <div className="container ">
             <h3>Add your note</h3>
             <form>
                 <div className="mb-3">
@@ -52,7 +52,7 @@ function AddNote() {
                     className="btn btn-primary"
                     onClick={handleAddnote}
                 >
-                    Submit
+                    Add Note
                 </button>
             </form>
         </div>
