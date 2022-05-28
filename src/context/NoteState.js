@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Notes from "../components/Notes";
 import NoteCotext from "./NoteContext";
 function NoteState(props) {
 	// host
@@ -19,15 +20,7 @@ function NoteState(props) {
 			body: JSON.stringify({ title, description, tag }),
 		});
 
-		const note = {
-			_id: "628e33cfe0aa7ww7b931a07c016",
-			user: "6288937d96095b2b5120d837",
-			title: title,
-			description: description,
-			tag: "crete note",
-			date: "2022-05-25T13:49:03.087Z",
-			__v: 0,
-		};
+		const note = await response.json();
 		setNotes(notes.concat(note));
 	};
 	// Add a note
@@ -36,12 +29,17 @@ function NoteState(props) {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
+				Accept: "application/json",
 				"auth-token":
 					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
 			},
 		});
 
 		const allnote = await response.json();
+
+		if (allnote.length === 0) {
+			return;
+		}
 		setNotes(allnote);
 	};
 
@@ -54,9 +52,8 @@ function NoteState(props) {
 				"auth-token":
 					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
 			},
-			body: JSON.stringify(),
 		});
-
+		const json = await response.json();
 		// delete user notes logic
 		const newNotes = notes.filter((deleteNote) => {
 			return deleteNote._id !== id;
@@ -74,23 +71,29 @@ function NoteState(props) {
 				"auth-token":
 					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
 			},
+			body: JSON.stringify({ title, description, tag }),
 		});
-		const json = response.json();
+		const json = await response.json();
 
 		// logic for edite notes
+		let newNote = JSON.parse(JSON.stringify(notes));
 		for (let index = 0; index < notes.length; index++) {
 			const element = notes[index];
 
 			if (element._id == id) {
-				element.title = title;
-				element.description = description;
-				element.tag = tag;
+				newNote[index].title = title;
+				newNote[index].description = description;
+				newNote[index].tag = tag;
+				break;
 			}
 		}
+		setNotes(newNote);
 	};
 
 	return (
-		<NoteCotext.Provider value={{ notes, addNote, deleteNotes, getAllNotes }}>
+		<NoteCotext.Provider
+			value={{ notes, addNote, deleteNotes, getAllNotes, editNotes }}
+		>
 			{props.children}
 		</NoteCotext.Provider>
 	);
