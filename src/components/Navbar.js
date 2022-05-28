@@ -45,20 +45,13 @@ function Navbar() {
 							</Link>
 						</li>
 					</ul>
-					<form className="d-flex" role="search">
-						<input
-							className="form-control me-2"
-							type="search"
-							placeholder="Search"
-							aria-label="Search"
-						/>
-						<button
-							className="btn btn-outline-success"
-							type="submit"
-							style={{ color: "white" }}
-						>
-							Search
-						</button>
+					<form className="d-flex " role="search">
+						<Link className="btn btn-primary mx-2" to="/signup" role="button">
+							Sign Up
+						</Link>
+						<Link className="btn btn-primary" to="/login" role="button">
+							Login
+						</Link>
 					</form>
 				</div>
 			</div>
