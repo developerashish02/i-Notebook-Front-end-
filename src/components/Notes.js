@@ -3,7 +3,7 @@ import NoteContext from "../context/NoteContext";
 import AddNote from "./AddNote";
 import NoteItems from "./NoteItems";
 
-function Notes() {
+function Notes(props) {
 	const context = useContext(NoteContext);
 	const { notes, getAllNotes, editNotes } = context;
 	const ref = useRef(null);
@@ -37,11 +37,12 @@ function Notes() {
 	const handleEditNote = (e) => {
 		editNotes(note.id, note.edit_title, note.edit_description, note.edit_tag);
 		closeRef.current.click();
+		props.showAlert(" Edit Note Successfully" , "success")
 	};
 
 	return (
 		<>
-			<AddNote />
+			<AddNote showAlert={props.showAlert} />
 			{/* edite note modal */}
 
 			<button
@@ -132,7 +133,9 @@ function Notes() {
 								Close
 							</button>
 							<button
-								disabled={note.edit_title.length < 3 || note.edit_description.length < 5}
+								disabled={
+									note.edit_title.length < 3 || note.edit_description.length < 5
+								}
 								type="button"
 								className="btn btn-primary"
 								onClick={handleEditNote}
@@ -151,7 +154,12 @@ function Notes() {
 				</div>
 				{notes.map((notes) => {
 					return (
-						<NoteItems notes={notes} key={notes._id} updateNote={updateNote} />
+						<NoteItems
+							notes={notes}
+							key={notes._id}
+							updateNote={updateNote}
+							showAlert={props.showAlert}
+						/>
 					);
 				})}
 			</div>

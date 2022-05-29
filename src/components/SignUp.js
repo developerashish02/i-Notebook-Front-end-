@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const host = "http://localhost:5000";
 
-function SignUp() {
+function SignUp(props) {
 	let navigate = useNavigate();
 	const [userDetail, setuserDetail] = useState({
 		name: "",
@@ -30,9 +30,14 @@ function SignUp() {
 		});
 
 		const json = await response.json();
-		// redirect to the home
-		localStorage.setItem("token", json.authtoken);
-		navigate("/");
+		if (json.success) {
+			// redirect to the home
+			localStorage.setItem("token", json.authtoken);
+			props.showAlert("Created  Account Successfully", "success");
+			navigate("/");
+		} else {
+			props.showAlert("Invalid Credential", "danger");
+		}
 
 		setuserDetail({
 			name: "",
@@ -54,6 +59,7 @@ function SignUp() {
 						onChange={handleChnage}
 						name="name"
 						value={userDetail.name}
+						required
 					/>
 				</div>
 				<div className="mb-3">
@@ -68,6 +74,7 @@ function SignUp() {
 						onChange={handleChnage}
 						name="email"
 						value={userDetail.email}
+						required
 					/>
 					<div id="emailHelp" className="form-text">
 						We'll never share your email with anyone else.
@@ -84,6 +91,7 @@ function SignUp() {
 						onChange={handleChnage}
 						name="password"
 						value={userDetail.password}
+						required
 					/>
 				</div>
 

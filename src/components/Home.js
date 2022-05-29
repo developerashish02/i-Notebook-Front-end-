@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import NoteContext from "../context/NoteContext";
 import Notes from "./Notes";
 import AddNote from "./AddNote";
-function Home() {
+function Home(props) {
 	return (
         <>
             {/* user notes */}
-			<Notes />
+			<Notes showAlert={props.showAlert} />
 		</>
 	);
 }
