@@ -1,16 +1,22 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import NoteContext from "../context/NoteContext";
 import AddNote from "./AddNote";
 import NoteItems from "./NoteItems";
 
 function Notes(props) {
+	const navigate = useNavigate();
 	const context = useContext(NoteContext);
 	const { notes, getAllNotes, editNotes } = context;
 	const ref = useRef(null);
 	const closeRef = useRef(null);
 	// get all notes
 	useEffect(() => {
-		getAllNotes();
+		if (localStorage.getItem("token")) {
+			getAllNotes();
+		} else {
+			navigate("/login");
+		}
 	}, []);
 
 	const [note, setNote] = useState({
@@ -37,7 +43,7 @@ function Notes(props) {
 	const handleEditNote = (e) => {
 		editNotes(note.id, note.edit_title, note.edit_description, note.edit_tag);
 		closeRef.current.click();
-		props.showAlert(" Edit Note Successfully" , "success")
+		props.showAlert(" Edit Note Successfully", "success");
 	};
 
 	return (
@@ -146,22 +152,24 @@ function Notes(props) {
 					</div>
 				</div>
 			</div>
-			<div className="row">
-				<h2>Your Notes</h2>
-				{/* when notes array is empty  */}
-				<div className="container mx-2">
-					{notes.length === 0 && "No Notes to display"}
+			<div className="container">
+				<div className="row">
+					<h2 className="text-center fw-bold">Your I-Notes</h2>
+					{/* when notes array is empty  */}
+					<div className="container mx-2">
+						{notes.length === 0 && "No Notes to display"}
+					</div>
+					{notes.map((notes) => {
+						return (
+							<NoteItems
+								notes={notes}
+								key={notes._id}
+								updateNote={updateNote}
+								showAlert={props.showAlert}
+							/>
+						);
+					})}
 				</div>
-				{notes.map((notes) => {
-					return (
-						<NoteItems
-							notes={notes}
-							key={notes._id}
-							updateNote={updateNote}
-							showAlert={props.showAlert}
-						/>
-					);
-				})}
 			</div>
 		</>
 	);

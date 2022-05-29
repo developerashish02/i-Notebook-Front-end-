@@ -25,14 +25,15 @@ function Login(props) {
 		});
 
 		const json = await response.json();
-		// login success 
+		// login success
 		if (json.success) {
 			// redirect to the home
-			props.showAlert("Login Successfully" , "success");
-			localStorage.setItem("token", json.authtoken);
+			props.showAlert("Login Successfully", "success");
+			const auth = json.authToken;
+			localStorage.setItem("token", auth);
 			navigate("/");
 		}
-		// show Alert for invalid credential 
+		// show Alert for invalid credential
 		else {
 			props.showAlert("Invalid Credential", "danger");
 		}
@@ -41,8 +42,9 @@ function Login(props) {
 		SetCredential({ email: "", password: "" });
 	};
 	return (
-		<div className="container">
-			<form onSubmit={handleSubmit}>
+		<div className="container align-items-center justify-content-center d-flex ">
+			<form onSubmit={handleSubmit} className="border border-dark px-5 py-4 rounded-2"	>
+				<h3 className="text-center mt-2 fw-light" >Login In </h3>
 				<div className="mb-3">
 					<label htmlFor="email" className="form-label">
 						Email address
@@ -75,7 +77,7 @@ function Login(props) {
 						required
 					/>
 				</div>
-				<button type="submit" className="btn btn-primary">
+				<button type="submit" className="btn btn-primary container align-items-center justify-content-center my-2">
 					Submit
 				</button>
 			</form>

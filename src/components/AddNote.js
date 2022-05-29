@@ -19,8 +19,8 @@ function AddNote(props) {
     };
     return (
         <div className="container my-3">
-            <h3>Add your note</h3>
-            <form>
+            <h3 className="text-center fw-bold">Add Your Note</h3>
+            <form >
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">
                         Title
@@ -69,7 +69,7 @@ function AddNote(props) {
                 </div>
                 <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary d-flex"
                     onClick={handleAddnote}
                     disabled={note.title.length < 3 || note.description.length < 5}
                 >

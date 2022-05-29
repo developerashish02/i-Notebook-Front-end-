@@ -17,10 +17,10 @@ function NoteItems(props) {
 		<div className="col-md-3">
 			<div className="card my-3">
 				<div className="card-body">
-					<h5 className="card-title">{title}</h5>
-					<p className="card-text">{description}</p>
+					<h5 className="card-title"> Title: {title}</h5>
+					<p className="card-text">Description: {description}</p>
 					{/* edite icon */}
-					<p className="card-text">{tag}</p>
+					<p className="card-text">Tag: {tag}</p>
 					{/* edite icon */}
 					<i
 						className="fa-solid fa-pen-to-square mx-2 "

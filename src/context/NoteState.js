@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import Notes from "../components/Notes";
 import NoteCotext from "./NoteContext";
 function NoteState(props) {
 	// host
 	const host = "http://localhost:5000";
 	const notesInitial = [];
-
 	const [notes, setNotes] = useState(notesInitial);
 
 	// Add a note
@@ -14,8 +12,7 @@ function NoteState(props) {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				"auth-token":
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
+				"auth-token": localStorage.getItem("token"),
 			},
 			body: JSON.stringify({ title, description, tag }),
 		});
@@ -30,8 +27,7 @@ function NoteState(props) {
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json",
-				"auth-token":
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
+				"auth-token": localStorage.getItem("token"),
 			},
 		});
 
@@ -49,8 +45,7 @@ function NoteState(props) {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				"auth-token":
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
+				"auth-token": localStorage.getItem("token"),
 			},
 		});
 		const json = await response.json();
@@ -68,8 +63,7 @@ function NoteState(props) {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
-				"auth-token":
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4ODkzN2Q5NjA5NWIyYjUxMjBkODM3In0sImlhdCI6MTY1MzE5OTQ2NX0.BjSk329Vd2qw4OQlgzx9tT7d-u2f65o_1btB5209b2c",
+				"auth-token": localStorage.getItem("token"),
 			},
 			body: JSON.stringify({ title, description, tag }),
 		});

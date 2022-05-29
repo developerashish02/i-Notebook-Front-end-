@@ -32,9 +32,10 @@ function SignUp(props) {
 		const json = await response.json();
 		if (json.success) {
 			// redirect to the home
-			localStorage.setItem("token", json.authtoken);
-			props.showAlert("Created  Account Successfully", "success");
+			const auth = json.authToken;
+			localStorage.setItem("token", auth);
 			navigate("/");
+			props.showAlert("Created  Account Successfully", "success");
 		} else {
 			props.showAlert("Invalid Credential", "danger");
 		}
@@ -46,9 +47,13 @@ function SignUp(props) {
 		});
 	};
 	return (
-		<div className="container">
-			<form onSubmit={handleSubmit}>
-				<div className="mb-3">
+		<div className="container align-items-center justify-content-center d-flex ">
+			<form
+				onSubmit={handleSubmit}
+				className="border rounded-3 border-primary px-5 py-3"
+			>
+				<h2 className="text-center  fw-light">Sign Up</h2>
+				<div className="mb-3 ">
 					<label htmlFor="name" className="form-label">
 						Full Name
 					</label>
@@ -95,7 +100,10 @@ function SignUp(props) {
 					/>
 				</div>
 
-				<button type="submit" className="btn btn-primary">
+				<button
+					type="submit"
+					className="btn btn-primary container align-items-center justify-content-center my-2"
+				>
 					Submit
 				</button>
 			</form>
