@@ -5,7 +5,6 @@ function NoteState(props) {
 	const host = "http://localhost:5000";
 	const notesInitial = [];
 	const [notes, setNotes] = useState(notesInitial);
-
 	// Add a note
 	const addNote = async (title, description, tag) => {
 		const response = await fetch(`${host}/api/notes/addnote`, {
@@ -48,7 +47,6 @@ function NoteState(props) {
 				"auth-token": localStorage.getItem("token"),
 			},
 		});
-		const json = await response.json();
 		// delete user notes logic
 		const newNotes = notes.filter((deleteNote) => {
 			return deleteNote._id !== id;
@@ -67,14 +65,13 @@ function NoteState(props) {
 			},
 			body: JSON.stringify({ title, description, tag }),
 		});
-		const json = await response.json();
 
 		// logic for edite notes
 		let newNote = JSON.parse(JSON.stringify(notes));
 		for (let index = 0; index < notes.length; index++) {
 			const element = notes[index];
 
-			if (element._id == id) {
+			if (element._id === id) {
 				newNote[index].title = title;
 				newNote[index].description = description;
 				newNote[index].tag = tag;
@@ -84,9 +81,17 @@ function NoteState(props) {
 		setNotes(newNote);
 	};
 
+
 	return (
 		<NoteCotext.Provider
-			value={{ notes, addNote, deleteNotes, getAllNotes, editNotes }}
+			value={{
+				notes,
+				addNote,
+				deleteNotes,
+				getAllNotes,
+				editNotes,
+
+			}}
 		>
 			{props.children}
 		</NoteCotext.Provider>

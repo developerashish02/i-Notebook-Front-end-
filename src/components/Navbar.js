@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useLocation, } from "react-router-dom";
 
 function Navbar() {
 	const location = useLocation();
-	const neviagte = useNavigate();
 
-	// handlelogout
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		neviagte("/login");
-	};
 	return (
 		<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div className="container-fluid">
@@ -30,36 +24,21 @@ function Navbar() {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 						<li className="nav-item">
-							<Link
-								className={`nav-link ${
-									location.pathname === "/" ? "active" : ""
-								}`}
-								aria-current="page"
-								to="/"
-							>
-								{location.pathname === "/login" ||
-								location.pathname === "/signup"
-									? ""
-									: "Home"}
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link
-								className={`nav-link ${
-									location.pathname === "/about" ||
-									location.pathname === "/signup"
-										? "active"
-										: ""
-								}`}
-								to="/about"
-							>
-								{location.pathname === "/login" ||
-								location.pathname === "/signup"
-									? ""
-									: "About"}
-							</Link>
+							{localStorage.getItem("token") ? (
+								<Link
+									className={`nav-link ${location.pathname === "/" ? "active" : ""
+										}`}
+									aria-current="page"
+									to="/"
+								>
+									Home
+								</Link>
+							) : (
+								""
+							)}
 						</li>
 					</ul>
+
 					{!localStorage.getItem("token") ? (
 						<form className="d-flex " role="search">
 							<Link className="btn btn-primary mx-2" to="/signup" role="button">
@@ -70,9 +49,20 @@ function Navbar() {
 							</Link>
 						</form>
 					) : (
-						<button className="btn btn-primary" onClick={handleLogout}>
-							Log out
-						</button>
+						""
+					)}
+
+					{/* user profile */}
+					{localStorage.getItem("token") ? (
+						<Link to="/userprofile">
+							<img
+								src="https://cdn-icons-png.flaticon.com/128/236/236832.png"
+								style={style}
+								className="mx-2"
+							/>
+						</Link>
+					) : (
+						""
 					)}
 				</div>
 			</div>
@@ -80,4 +70,9 @@ function Navbar() {
 	);
 }
 
+const style = {
+	height: "40px",
+	width: "40",
+	cursor: "pointer",
+};
 export default Navbar;
